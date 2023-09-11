@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Магазин 📚</title>
+    <meta name="description" content="Описание страницы">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link href="/favicon.ico" rel="shortcut icon">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/fonts.min.css?v=87821122">
+    <link rel="stylesheet" href="/assets/css/basic.min.css?v=87821122">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/assets/css/extra.min.css?v=87821122">
+    <link rel="stylesheet" href="/assets/css/custom.css?v=87821122">
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script defer src="/assets/js/scripts.min.js?v=87821122"></script>
+</head>
+<body class="Site">
+<header class="Header" th:replace="~{fragments/common_header_fragment :: head(status=${status})}"></header>
+<div class="Middle">
+    <div class="wrap">
+        <main class="Middle-main">
+            <ul class="breadcrumbs"
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=${bookDto.book.title}, head='Книги', headHref='/genres/')}"></ul>
+            <div class="Product">
+                <div class="ProductCard">
+                    <div class="ProductCard-look">
+                        <form   id="imgForm" method="POST" enctype="multipart/form-data" action="#" th:action="${'/books/'+bookDto.book.slug+'/img/save'}">
+                        <div class="ProductCard-photo" id="uploadButton"><img th:src="${bookDto.book.image}" src="/assets/img/content/main/card.jpg"
+                                                            alt="card.jpg"/>
+                        </div>
+                        <input type="file" name="file" id="dialog" style="display: none" accept="image/*">
+                        </form>
+
+                    </div>
+                    <div class="ProductCard-desc" th:replace="~{fragments/book_description_fragment :: bookDesc(book=${bookDto.getBook()}, starRating=${starRating},
+                    genres=${bookDto.getBook2TagEntity()}, rating=${bookDto.rating}, reviews=${reviewList.size()})}"></div>
+                </div>
+                <div class="Product-comments">
+                    <div class="Product-comments-header">
+                        <div>
+                            <h3 class="Product-comments-title">Отзывы</h3>
+                            <span class="Product-comments-amount" th:text="${reviewList.size()+' отзывов'}">567 отзывов</span>
+                        </div>
+                        <div sec:authorize="isAuthenticated()" class="ProductCard-cartElement"><a class="btn btn_primary btn_outline btn_review" href="#"><span
+                                class="btn-icon"><img src="/assets/img/icons/download.svg" alt="download.svg"/></span><span
+                                class="btn-content">Оставить отзыв</span></a>
+                        </div>
+                        <div id="reviewPopup"  class="modal-window">
+                            <strong>Ваш отзыв</strong>
+                            <div>
+                                    <textarea name="text" class="reviewText" rows="7" cols="20" placeholder="Ваш отзыв" ></textarea>
+                                    <button class="Spoiler-trigger btn btn_primary btn_reviewsend" type="button"
+                                            th:attr="data-bookid = ${bookDto.book.id}" book-id="99999"
+                                            data-showtext="Отправить">
+                                    </button>
+                            </div>
+                            <span id="myPopup__close" class="close modal-close"><span></span><span></span></span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div th:replace="~{fragments/book_reviews_fragment :: reviewBlock(reviewList=${reviewList})}"></div>
+            </div>
+        </main>
+    </div>
+</div>
+<footer class="Footer" th:replace="~{fragments/common_footer_fragment :: footer}"></footer>
+<script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/assets/js/UploadNewBookImageScript.js"></script>
+<script src="/assets/js/customBookScript.js"></script>
+</body>
+</html>

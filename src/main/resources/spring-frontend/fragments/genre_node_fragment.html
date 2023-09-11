@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="Tags" th:fragment="genreFragment">
+    <div th:each="node : ${nodesList}" th:class="${node.elements.size>0?'Tags-title':'Tag'}" class="Tags-title" >
+        <div class="Tag" th:if="${node.elements.size>0}">
+            <a href="/genres/slug.html" th:href="${'/genres/'+node.id}">
+                <span th:text="${node.title}">Детективы</span>
+                <span class="undefined-amount" th:text="${'('+node.countBooks+')'}" >(10)</span>
+            </a>
+        </div>
+            <a th:if="${node.elements.size==0}" href="/genres/slug.html" th:href="${'/genres/'+node.id}">
+                <span th:text="${node.title}">Детективы</span>
+                <span class="undefined-amount" th:text="${'('+node.countBooks+')'}">(10)</span>
+            </a>
+        <div th:replace="~{fragments/genre_node_fragment :: genreFragment(nodesList=${node.elements})}"></div>
+    </div>
+</div>
+/html>

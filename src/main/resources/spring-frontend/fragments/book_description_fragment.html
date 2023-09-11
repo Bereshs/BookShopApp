@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="ProductCard-desc" th:fragment="bookDesc">
+    <div class="ProductCard-header">
+        <h1 class="ProductCard-title" th:text="${book.title}">Мара и морок
+        </h1>
+        <div class="ProductCard-author"><span class="ProductCard-titleProp">Автор:</span>&#32;<a
+                href="#"  th:href=@{'/authors/'+${book.getAuthorId()}} th:text="${book.getAuthorName()}" >Лия Арден</a>
+        </div>
+        <div class="ProductCard-rating"><span class="ProductCard-titleProp">Рейтинг:</span>
+            <button class="trigger trigger_dropdown" type="button">
+                <div class="Rating Rating_noStyleLink">
+                    <span class="Rating-stars">
+                        <span th:each="i: ${#numbers.sequence(1, 5)}" th:class="${rating>=i?'Rating-star Rating-star_view':'Rating-star'}" class="Rating-star Rating-star_view">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                            <g>
+                              <g>
+                                <path fill="#ffc000"
+                                      d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                              </g>
+                            </g>
+                          </svg>
+                        </span>
+                    <span class="Rating-title" th:text="${'('+reviews+')'}">(567)</span>
+                </div>
+                <div class="modal modal_compression modal_dropdown">
+                    <div class="modal-window"><a class="modal-close"
+                                                 href="#"><span></span><span></span></a>
+                        <strong class="modal-title">Распределение оценок
+                        </strong>
+                        <div class="RatingGroup">
+                            <span th:each="line, iter : ${starRating} " class="Rating">
+                            <span  class="Rating-stars">
+                                <span th:each="i: ${#numbers.sequence(1, 5)}" th:class="${(5-iter.index)>=i?'Rating-star Rating-star_view':'Rating-star'}" class="Rating-star Rating-star_view">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                                  <g>
+                                    <g>
+                                      <path fill="#ffc000"
+                                            d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                                    </g>
+                                  </g>
+                                </svg>
+                                </span>
+                                <span class="Rating-title" th:text="${line!=null?line:0}">1</span><br>
+                            </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+        <div class="ProductCard-assessment"  sec:authorize="isAuthenticated()" ><span
+                class="ProductCard-titleProp">Оцените книгу:</span><span class="Rating Rating_input"
+                                                                         th:attr="data-bookid=${book.getId()}" data-bookid="2121"><span
+                class="Rating-stars"><span class="Rating-star">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                          <g>
+                            <g>
+                              <path fill="#ffc000"
+                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                            </g>
+                          </g>
+                        </svg></span>
+                      <input name="rating" type="radio" value="1"/><span class="Rating-star">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                          <g>
+                            <g>
+                              <path fill="#ffc000"
+                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                            </g>
+                          </g>
+                        </svg></span>
+                      <input name="rating" type="radio" value="2"/><span class="Rating-star">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                          <g>
+                            <g>
+                              <path fill="#ffc000"
+                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                            </g>
+                          </g>
+                        </svg></span>
+                      <input name="rating" type="radio" value="3"/><span class="Rating-star">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                          <g>
+                            <g>
+                              <path fill="#ffc000"
+                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                            </g>
+                          </g>
+                        </svg></span>
+                      <input name="rating" type="radio" value="4"/><span class="Rating-star">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                          <g>
+                            <g>
+                              <path fill="#ffc000"
+                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                            </g>
+                          </g>
+                        </svg></span>
+                      <input name="rating" type="radio" value="5"/></span></span>
+        </div>
+        <div class="ProductCard-tags"><span class="ProductCard-titleProp">Тэги:</span>
+            <a th:each="genre : ${genres}" href="/tags/" th:text="${genre.name+',&nbsp;'}" th:href="@{'/tags/'+${genre.id}}">Современные,&#32;</a>
+        </div>
+        <div class="ProductCard-cost"><span class="ProductCard-titleProp">Цена:</span><span
+                class="ProductCard-priceOld" th:text="${book.discountPrice()}">₽300</span><span class="ProductCard-price" th:text="${book.price}">₽180</span>
+        </div>
+    </div>
+    <div class="ProductCard-text" th:text="${book.description}">
+        <p>Таких, как я, называют Марами - отмеченными самой богиней смерти Мораной. Когда-то у меня
+            и моих шести сестер был свой путь. Тогда люди нас уважали и просили о милосердии. Они
+            приносили нам подношения и молились нам. Но 200 лет назад все изменилось, когда принц
+            Серата осмелился поднять руку на одну из нас. Я пыталась отомстить, но погибли мы все.
+            Теперь правители Аракена, погрязшие в длительной войне со своим соседом Сератом, решили
+            вернуть меня к жизни. Дать второй шанс на месть и свободу, привязав меня к тому, против
+            кого я никогда не пойду. Таких, как он, называют Морок, и их боятся абсолютно все.
+        </p>
+    </div>
+    <div th:replace="~{fragments/book_slug_buttons_fragment :: panel(book=${book})}"></div>
+</div>
+</html>

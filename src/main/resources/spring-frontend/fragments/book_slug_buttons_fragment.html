@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="panel">
+    <div class="ProductCard-cart">
+        <div class="ProductCard-cartElement">
+            <button class="btn btn_primary btn_outline" data-sendstatus="kept" data-bookid="[1111]"
+                    th:attr="data-bookid = ${'kept/'+book.slug}" data-btntype="check" data-btnradio="buyblock" data-check="false"
+                    data-alttext="Отложена"><span class="btn-icon"><img
+                    src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
+                    class="btn-content">Отложить</span>
+            </button>
+        </div>
+        <div class="ProductCard-cartElement">
+            <button class="btn btn_primary btn_outline" data-sendstatus="cart" data-bookid="[1111]"
+                    th:attr="data-bookid = ${'cart/'+book.slug}" data-btntype="check" data-btnradio="buyblock" data-check="false"
+                    data-alttext="В корзине"><span class="btn-icon"><img
+                    src="/assets/img/icons/shopping-basket.svg"
+                    alt="shopping-basket.svg"/></span><span class="btn-content">Купить</span>
+            </button>
+        </div>
+
+    </div>
+    <div class="ProductCard-cart">
+        <div class="ProductCard-cartElement"><a class="btn btn_primary btn_outline dwn" href="#"><span
+                class="btn-icon"><img src="/assets/img/icons/download.svg"
+                                      alt="download.svg"/></span><span
+                class="btn-content">Скачать</span></a>
+        </div>
+        <div class="ProductCard-cartElement">
+            <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
+                    th:attr="data-bookid = ${book.slug}" data-bookid="[1111]" data-btntype="check" data-btnradio="buyblock"
+                    data-check="false" data-alttext="Вернуть из архива"><span class="btn-icon"><img
+                    src="/assets/img/icons/archive.svg" alt="archive.svg"/></span><span
+                    class="btn-content">В архив</span>
+            </button>
+        </div>
+    </div>
+    <div  sec:authorize="isAuthenticated()" id="myPopup"  class="modal-window">
+        <strong th:text="${filesToDownload.empty?'Нет доступных ссылок для скачивания':'Ссылки для скачивания'}">Ссылки для скачивания</strong>
+        <div th:unless="${filesToDownload.empty}">
+            <div th:each="file: ${filesToDownload}"  class="btn btn_primary btn_outline" style="margin-right: 5px; margin-bottom: 5px;">
+                <span class="btn-icon"><img src="/assets/img/icons/download.svg" alt="download.svg"/></span>
+                <a  th:href="@{${'/files'+file.getPath()}}" href="/books/download/aaasss222" th:text="${'Скачать '+file.getFileTypeEntity.getName()}"> what are hell1</a>
+            </div>
+        </div>
+        <span id="myPopup__close" class="close modal-close"><span></span><span></span></span>
+    </div>
+    <div id="myOverlay" sec:authorize="isAuthenticated()"></div>
+
+</div>
+
+</html>
